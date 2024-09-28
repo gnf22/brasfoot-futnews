@@ -10,7 +10,7 @@ const LoginPage: React.FC<{ onLogin: () => void }> = ({ onLogin }) => {
     await createUser(name);
     localStorage.setItem('userName', name);
     onLogin(); // chama a função que atualiza o estado de login
-    navigate('/welcome'); // redireciona para a página de boas-vindas
+    navigate('/brasfoot-futnews/welcome'); // redireciona para a página de boas-vindas
   };
 
   return (
