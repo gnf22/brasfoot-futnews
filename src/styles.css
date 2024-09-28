@@ -11,6 +11,64 @@ body {
   overflow-x: hidden;
 }
 
+.login-container {
+  background-color: rgba(255, 255, 255, 0.9); /* Fundo branco com leve transparência */
+  border-radius: 10px; /* Cantos arredondados */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2); /* Sombra mais intensa */
+  padding: 30px; /* Espaçamento interno */
+  text-align: center; /* Centraliza o texto */
+  width: 350px; /* Largura do container */
+  backdrop-filter: blur(10px); /* Efeito de desfoque no fundo */
+}
+
+.login-title {
+  font-size: 28px; /* Tamanho da fonte do título */
+  color: #333; /* Cor do texto */
+  margin-bottom: 15px; /* Espaçamento abaixo do título */
+  text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.7); /* Sombra no texto */
+}
+
+.login-instruction {
+  font-size: 18px; /* Tamanho da fonte da instrução */
+  color: #555; /* Cor do texto mais clara */
+  margin-bottom: 25px; /* Espaçamento abaixo da instrução */
+}
+
+.login-input {
+  border: none;
+  background-color: #e3e6ea;
+  width: 90%; /* Largura completa do input */
+  padding: 12px; /* Espaçamento interno do input */
+  border-radius: 5px; /* Cantos arredondados */
+  margin-bottom: 20px; /* Espaçamento abaixo do input */
+  font-size: 16px; /* Tamanho da fonte */
+  transition: border-color 0.3s; /* Transição suave para a cor da borda */
+}
+
+.login-input:focus {
+  outline: none; /* Remove o contorno padrão */
+}
+
+.login-button {
+  background-color: #179c6d; /* Cor de fundo do botão */
+  color: #fff; /* Cor do texto do botão */
+  border: none; /* Remove borda padrão */
+  border-radius: 5px; /* Cantos arredondados */
+  padding: 12px 20px; /* Espaçamento interno do botão */
+  cursor: pointer; /* Cursor de ponteiro */
+  font-size: 16px; /* Tamanho da fonte */
+  transition: background-color 0.3s, transform 0.2s; /* Transições suaves */
+}
+
+.login-button:hover {
+  background-color: #46d98d; /* Cor do botão ao passar o mouse */
+  transform: scale(1.05); /* Leve aumento ao passar o mouse */
+}
+
+.login-button:active {
+  transform: scale(0.95); /* Efeito de pressionar o botão */
+}
+
 /* Container Externo */
 .outer-container {
   max-width: 800px; /* Largura máxima */
