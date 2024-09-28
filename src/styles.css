@@ -1,0 +1,200 @@
+/* Estilos Globais */
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #e9ecef;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Container Externo */
+.outer-container {
+  max-width: 800px; /* Largura máxima */
+  min-width: 800px;
+  width: 100%; /* Ocupa 100% da largura disponível */
+  padding: 20px; /* Espaço interno */
+  background-color: #f8f9fa; /* Cor de fundo */
+  border-radius: 15px; /* Bordas arredondadas */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Sombra leve */
+  overflow: hidden; /* Evita overflow indesejado */
+}
+
+/* Estilos do Container Interno */
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Estilos do Título */
+h1 {
+  color: #233327;
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  text-align: center;
+  padding: 0 10px; /* Adicionando padding lateral */
+}
+
+/* Estilos da Lista */
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0; /* Removendo margem */
+  display: grid; /* Usando grid para o layout */
+  grid-template-columns: repeat(auto-fill, minmax(10rem, 1fr)); /* Múltiplas colunas, com tamanho em rem */
+  gap: 1rem; /* Espaçamento entre os itens */
+  width: 100%; /* Garantindo que a lista ocupe 100% da largura */
+}
+
+
+/* Estilos dos Itens da Lista */
+li {
+  background-color: #fff;
+  padding: 1rem; /* Usando rem para padding */
+  border-radius: 1rem; /* Bordas arredondadas em rem */
+  box-shadow: 0 0.4rem 1.2rem rgba(0, 0, 0, 0.3); /* Sombra leve em rem */
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: transform 0.2s;
+  flex-wrap: wrap; /* Permite que o conteúdo quebre em várias linhas */
+}
+
+
+/* Estilos do Logo do Time */
+img.team-logo {
+  width: 4.5rem; /* Tamanho do escudo em rem */
+  height: 4.5rem;
+  margin-bottom: 0.5rem; /* Margem em rem */
+}
+
+
+/* Detalhes do Time */
+.team-details {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%; /* Para garantir que ocupe toda a largura */
+}
+
+/* Nome do Time */
+.team-name {
+  font-weight: bold;
+  font-size: 1.2rem; /* Tamanho do nome do time */
+  margin: 0.5rem 0; /* Margem em rem */
+  white-space: normal; /* Permite quebra de linha no nome do time */
+  word-wrap: break-word; /* Quebra palavras longas se necessário */
+}
+
+
+/* Nome do Treinador */
+.team-coach {
+  margin-bottom: 0.5rem; /* Margem em rem */
+  font-size: 0.9rem; /* Tamanho da fonte em rem */
+}
+
+/* Botões do Time */
+.team-buttons {
+  display: flex;
+  justify-content: center;
+  margin-top: 5px; /* Espaço acima dos botões */
+}
+
+button.choose {
+  padding: 5px 20px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button.choose:hover {
+  background-color: #218838;
+}
+
+button.despair {
+  padding: 5px 20px;
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button.despair:hover {
+  background-color: #c82333;
+}
+
+/* Links */
+.link {
+  color: #007bff;
+  cursor: pointer;
+  margin-left: 10px;
+  text-decoration: underline;
+  font-size: 0.9rem;
+}
+
+.link:hover {
+  color: #0056b3;
+  text-decoration: none;
+}
+
+@media (max-width: 768px) {
+  .outer-container {
+    min-width: 400px;
+  }
+
+  ul {
+    grid-template-columns: repeat(auto-fill, minmax(8rem, 1fr)); /* Reduzindo o tamanho mínimo */
+  }
+
+  li {
+    padding: 0.8rem; /* Reduzindo o padding */
+  }
+
+  img.team-logo {
+    width: 4rem; /* Diminuindo a logo */
+    height: 4rem;
+  }
+
+  h1 {
+    font-size: 2rem; /* Reduzindo o tamanho do título */
+  }
+}
+
+@media (max-width: 480px) {
+  .outer-container {
+    min-width: 300px;
+  }
+
+  .team-name {
+    font-size: 1.0rem;
+  }
+
+  ul {
+    grid-template-columns: repeat(auto-fill, minmax(6rem, 1fr)); /* Tamanho mínimo ainda menor */
+  }
+
+  li {
+    padding: 0.5rem; /* Reduzindo o padding */
+  }
+
+  img.team-logo {
+    width: 3rem; /* Diminuindo a logo */
+    height: 3rem;
+  }
+
+  h1 {
+    font-size: 1.5rem; /* Reduzindo ainda mais o título */
+  }
+}
