@@ -13,8 +13,6 @@ const WelcomePage = ({ name }: { name: string }) => {
 
 
   useEffect(() => {
-    console.log(import.meta.env.VITE_FIREBASE_API_KEY);
-    
     const unsubscribe = onSnapshot(collection(db, "teams"), (snapshot) => {
       const teamData = snapshot.docs.map(doc => {
         const data = doc.data();

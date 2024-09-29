@@ -3,6 +3,8 @@ import { createUser } from '../services/firebase';
 import { useNavigate } from 'react-router-dom';
 
 const LoginPage: React.FC<{ onLogin: () => void }> = ({ onLogin }) => {
+  console.log(import.meta.env.VITE_FIREBASE_API_KEY);
+
   const [name, setName] = useState<string>('');
   const navigate = useNavigate();
 
