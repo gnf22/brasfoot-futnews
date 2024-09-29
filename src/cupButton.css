@@ -1,0 +1,82 @@
+.container {
+  display: flex; 
+  flex-direction: column; 
+  align-items: center; 
+  width: 100%; 
+}
+
+.cup-button-container {
+  display: flex; 
+  flex-direction: column; 
+  align-items: center; 
+  gap: 10px; 
+  margin-top: 20px; 
+  width: 100%; 
+}
+
+.cup-button {
+  padding: 10px 15px; 
+  font-size: 1rem; 
+  width: 100%; 
+  max-width: 300px; 
+  border: none; 
+  border-radius: 5px; 
+  background-color: #007bff; 
+  color: white; 
+  cursor: pointer; 
+  transition: background-color 0.3s; 
+}
+
+.cup-button:disabled {
+  background-color: #c0c0c0; 
+  cursor: not-allowed; 
+}
+
+.cup-button:hover:not(:disabled) {
+  background-color: #0056b3; 
+}
+
+
+@media (max-width: 1024px) {
+  .container {
+    margin-top: 250px;
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    margin-top: 100px;
+  }
+
+  .cup-button {
+    font-size: 0.9rem; 
+  }
+}
+
+@media (max-width: 540px) {
+  .container {
+    margin-top: 250px;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    margin-top: 50px;
+  }
+
+  .cup-button {
+    font-size: 0.8rem; 
+    padding: 8px 12px; 
+  }
+}
+
+@media (max-width: 375px) {
+  .container {
+    margin-top: 180px;
+  }
+
+  .cup-button {
+    font-size: 0.7rem; 
+    padding: 6px 10px; 
+  }
+}

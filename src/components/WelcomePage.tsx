@@ -1,53 +1,53 @@
 import { useEffect, useState } from 'react';
-import { assignCoachToTeam, removeCoachFromTeam } from '../services/firebase';
+import { assignCoachToTeam, getIsSelectionCupEnabled, getIsWorldCupEnabled, removeCoachFromTeam } from '../services/firebase';
 import { collection, onSnapshot } from 'firebase/firestore';
 import { getFirestore } from 'firebase/firestore';
+import { normalizeTeamName } from '../utils/normalizeTeamName';
 
 const WelcomePage = ({ name }: { name: string }) => {
   const [teams, setTeams] = useState<{ id: string; name: string; coach?: string }[]>([]);
   const [currentTeamId, setCurrentTeamId] = useState<string | null>(null);
+  const [isSelectionCupEnabled, setIsSelectionCupEnabled] = useState(false);
+  const [isWorldCupEnabled, setIsWorldCupEnabled] = useState(false);
   const db = getFirestore();
 
-  const normalizeTeamName = (name: string) => {
-    return name
-      .toLowerCase()
-      .replace(/\s+/g, '_')
-      .replace(/[áãâ]/g, 'a')
-      .replace(/[éê]/g, 'e')
-      .replace(/[í]/g, 'i')
-      .replace(/[óô]/g, 'o')
-      .replace(/[ú]/g, 'u');
-  };
 
   useEffect(() => {
-    // Escuta as mudanças na coleção "teams"
     const unsubscribe = onSnapshot(collection(db, "teams"), (snapshot) => {
       const teamData = snapshot.docs.map(doc => {
         const data = doc.data();
         return {
           id: doc.id,
-          name: data.name, // Certifique-se de que 'name' existe
-          coach: data.coach // Isso pode ser opcional, dependendo da estrutura
+          name: data.name,
+          coach: data.coach
         };
       });
+
       setTeams(teamData);
-  
-      // Verifica se o usuário já é treinador de um time e atualiza o estado
       const currentTeam = teamData.find(team => team.coach === name);
       setCurrentTeamId(currentTeam ? currentTeam.id : null);
     });
   
     return () => unsubscribe();
   }, [db, name]);
+
+  useEffect(() => {
+    const fetchSettings = async () => {
+      const selectionEnabled = await getIsSelectionCupEnabled();
+      const worldCupEnabled = await getIsWorldCupEnabled();
+      
+      setIsSelectionCupEnabled(selectionEnabled[0]);
+      setIsWorldCupEnabled(worldCupEnabled[0]);
+    };
+
+    fetchSettings();
+  }, []);
   
 
   const handleSelectTeam = async (teamId: string) => {
-    // Verifica se o usuário já é treinador de um time
     if (currentTeamId) {
-      // Remove o treinador do time atual antes de atribuir o novo
       await removeCoachFromTeam(currentTeamId);
     }
-    // Atribui o novo time ao usuário
     await assignCoachToTeam(teamId, name);
   };
 
@@ -56,12 +56,21 @@ const WelcomePage = ({ name }: { name: string }) => {
   };
 
   return (
-    <div className="outer-container"> {/* Novo container externo */}
+    <div className="outer-container">
       <div className="container">
+        <div className="cup-button-container">
+          <button className="cup-button" disabled={!isSelectionCupEnabled}>
+            Copa América / Eurocopa
+          </button>
+          <button className="cup-button" disabled={!isWorldCupEnabled}>
+            Copa do Mundo
+          </button>
+        </div>
+
         <h1>Bem-vindo, {name}!</h1>
         <ul>
           {teams
-            .sort((a, b) => a.name.localeCompare(b.name)) // Ordena os times em ordem alfabética
+            .sort((a, b) => a.name.localeCompare(b.name))
             .map((team) => (
               <li key={team.id}>
                 <img

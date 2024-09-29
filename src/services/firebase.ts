@@ -3,15 +3,28 @@ import { initializeApp } from 'firebase/app';
 import { getFirestore, getDocs, collection, addDoc, updateDoc, doc } from 'firebase/firestore';
 
 const firebaseConfig = {
-  apiKey: "AIzaSyD2fEBnnEK1ibG3WTiYdPn1Ch8J6ZOn2oE",
-  authDomain: "futnews-brasfoot.firebaseapp.com",
-  projectId: "futnews-brasfoot"
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
 };
 
 const firebaseApp = initializeApp(firebaseConfig);
 const db = getFirestore(firebaseApp);
 const userCollectionRef = collection(db, "users");
 const teamCollectionRef = collection(db, "teams");
+const settingsCollectionRef = collection(db, "settings");
+
+export const getIsSelectionCupEnabled = async () => {
+  const data = await getDocs(settingsCollectionRef);
+  const settings = data.docs.map((doc) => doc.data().isSelectionCupEnabled);
+  return settings;
+};
+
+export const getIsWorldCupEnabled = async () => {
+  const data = await getDocs(settingsCollectionRef);
+  const settings = data.docs.map((doc) => doc.data().isWorldCupEnabled);
+  return settings;
+};
 
 export const createUser = async (name: string) => {
   await addDoc(userCollectionRef, { name });
@@ -39,12 +52,12 @@ export const getTeamsFromFirestore = async () => {
   export const assignCoachToTeam = async (teamId: string, coachName: string) => {
     const teamDocRef = doc(db, "teams", teamId);
     await updateDoc(teamDocRef, {
-      coach: coachName // Altere conforme a estrutura que você deseja
+      coach: coachName
     });
   };
 
   export const removeCoachFromTeam = async (teamId: string) => {
     const teamRef = doc(db, "teams", teamId);
-    await updateDoc(teamRef, { coach: null }); // Remove o treinador do time
+    await updateDoc(teamRef, { coach: null });
   };
       

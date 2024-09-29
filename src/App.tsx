@@ -1,9 +1,9 @@
-// src/App.tsx
 import { useEffect, useState } from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import AppRoutes from './Routes';
 import { checkUserExists } from './services/firebase';
 import './styles.css';
+import './cupButton.css';
 
 function App() {
   const [isLogged, setIsLogged] = useState<boolean>(false);
