@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router-dom';
 
 const LoginPage: React.FC<{ onLogin: () => void }> = ({ onLogin }) => {
   console.log(import.meta.env.VITE_FIREBASE_API_KEY);
+  console.log(import.meta.env.VITE_FIREBASE_AUTH_DOMAIN);
+  console.log(import.meta.env.VITE_FIREBASE_PROJECT_ID);
 
   const [name, setName] = useState<string>('');
   const navigate = useNavigate();
