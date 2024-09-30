@@ -1,28 +1,21 @@
 import { useEffect, useState } from 'react';
-import { assignCoachToTeam, removeCoachFromTeam } from '../services/firebase';
+import { assignCoachToWorldCupTeam, removeCoachFromWorldCupTeam } from '../services/firebase';
 import { collection, onSnapshot } from 'firebase/firestore';
 import { getFirestore } from 'firebase/firestore';
 import { normalizeTeamName } from '../utils/normalizeTeamName';
 import { useNavigate } from 'react-router-dom';
 
-interface SettingsData {
-  isSelectionCupEnabled: boolean;
-  isWorldCupEnabled: boolean;
-  isClubEnabled: boolean;
-}
 
-const WelcomePage = ({ name }: { name: string }) => {
+const CopaDoMundoPage = ({ name }: { name: string }) => {
   const [teams, setTeams] = useState<{ id: string; name: string; coach?: string }[]>([]);
   const [currentTeamId, setCurrentTeamId] = useState<string | null>(null);
-  const [isSelectionCupEnabled, setIsSelectionCupEnabled] = useState(false);
   const [isWorldCupEnabled, setIsWorldCupEnabled] = useState(false);
-  const [isClubEnabled, setIsClubEnabled] = useState(false);
 
   const db = getFirestore();
   const navigate = useNavigate();
 
   useEffect(() => {
-    const unsubscribe = onSnapshot(collection(db, "teams"), (snapshot) => {
+    const unsubscribe = onSnapshot(collection(db, "world_cup"), (snapshot) => {
       const teamData = snapshot.docs.map(doc => {
         const data = doc.data();
         return {
@@ -42,24 +35,12 @@ const WelcomePage = ({ name }: { name: string }) => {
 
   useEffect(() => {
     const unsubscribe = onSnapshot(collection(db, "settings"), (snapshot) => {
-      const settingsData: SettingsData = {
-        isClubEnabled: false,
-        isSelectionCupEnabled: false,
-        isWorldCupEnabled: false,
-      };
-  
       snapshot.docs.forEach(doc => {
         const data = doc.data();
-        settingsData.isSelectionCupEnabled = data.isSelectionCupEnabled || false;
-        settingsData.isWorldCupEnabled = data.isWorldCupEnabled || false;
-        settingsData.isClubEnabled = data.isClubEnabled || false;
+        if (data.isWorldCupEnabled !== undefined) {
+          setIsWorldCupEnabled(data.isWorldCupEnabled);
+        }
       });
-  
-      setIsSelectionCupEnabled(settingsData.isSelectionCupEnabled);
-      setIsWorldCupEnabled(settingsData.isWorldCupEnabled);
-      setIsClubEnabled(settingsData.isClubEnabled);
-    }, (error) => {
-      console.error("Erro ao ouvir configurações: ", error);
     });
 
     return () => unsubscribe();
@@ -68,13 +49,13 @@ const WelcomePage = ({ name }: { name: string }) => {
 
   const handleSelectTeam = async (teamId: string) => {
     if (currentTeamId) {
-      await removeCoachFromTeam(currentTeamId);
+      await removeCoachFromWorldCupTeam(currentTeamId);
     }
-    await assignCoachToTeam(teamId, name);
+    await assignCoachToWorldCupTeam(teamId, name);
   };
 
   const handleGiveUpTeam = async (teamId: string) => {
-    await removeCoachFromTeam(teamId);
+    await removeCoachFromWorldCupTeam(teamId);
   };
 
   return (
@@ -82,18 +63,10 @@ const WelcomePage = ({ name }: { name: string }) => {
       <div className="container">
         <div className="cup-button-container">
           <button 
-            className="cup-button" 
-            disabled={!isSelectionCupEnabled}
-            onClick={() => navigate("/brasfoot-futnews/copa-america-euro")}
+            className="cup-button"
+            onClick={() => navigate("/brasfoot-futnews/welcome")}
           >
-            Copa América / Eurocopa
-          </button>
-          <button 
-            className="cup-button" 
-            disabled={!isWorldCupEnabled}
-            onClick={() => navigate("/brasfoot-futnews/world-cup")}
-          >
-            Copa do Mundo
+            Clubes
           </button>
         </div>
 
@@ -104,7 +77,7 @@ const WelcomePage = ({ name }: { name: string }) => {
             .map((team) => (
               <li key={team.id}>
                 <img
-                  src={`${import.meta.env.BASE_URL}/assets/logos/teams/${normalizeTeamName(team.name)}.svg`}
+                  src={`${import.meta.env.BASE_URL}/assets/logos/national_teams/${normalizeTeamName(team.name)}.svg`}
                   alt={`${team.name} escudo`}
                   className="team-logo"
                 />
@@ -116,9 +89,9 @@ const WelcomePage = ({ name }: { name: string }) => {
                   <div className="team-buttons">
                     {!team.coach && !currentTeamId && (
                       <button 
-                        className="choose"
-                        disabled={!isClubEnabled}
+                        className="choose" 
                         onClick={() => handleSelectTeam(team.id)}
+                        disabled={!isWorldCupEnabled}
                       >
                         Treinar
                       </button>
@@ -126,9 +99,9 @@ const WelcomePage = ({ name }: { name: string }) => {
                     {team.coach === name && (
                       <button 
                         className="despair" 
-                        disabled={!isClubEnabled}
                         onClick={() => handleGiveUpTeam(team.id)}
-                        >
+                        disabled={!isWorldCupEnabled}
+                      >
                         Demitir-se
                       </button>
                     )}
@@ -142,4 +115,4 @@ const WelcomePage = ({ name }: { name: string }) => {
   );
 };
 
-export default WelcomePage;
+export default CopaDoMundoPage;

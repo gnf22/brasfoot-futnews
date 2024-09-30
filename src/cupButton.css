@@ -28,55 +28,40 @@
 }
 
 .cup-button:disabled {
-  background-color: #c0c0c0; 
-  cursor: not-allowed; 
+  background-color: #6c757d; /* Cor de fundo para botão desabilitado */
+  cursor: not-allowed; /* Cursor padrão para botão desabilitado */
+  opacity: 0.65; /* Reduz a opacidade do botão desabilitado */
 }
 
 .cup-button:hover:not(:disabled) {
-  background-color: #0056b3; 
+  background-color: #0056b3; /* Cor do botão ao passar o mouse se não estiver desabilitado */
+  transform: scale(1.05); /* Leve aumento ao passar o mouse */
 }
 
+.cup-button:active:not(:disabled) {
+  transform: scale(0.95); /* Efeito de pressionar o botão se não estiver desabilitado */
+}
 
-@media (max-width: 1024px) {
-  .container {
-    margin-top: 250px;
-  }
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  width: 100%;
+  max-height: 70vh;
+}
+
+li {
+  display: block;
+  width: auto;
+  margin: 10px 0;
+  padding: 10px;
+  box-sizing: border-box;
 }
 
 @media (max-width: 768px) {
-  .container {
-    margin-top: 100px;
-  }
-
-  .cup-button {
-    font-size: 0.9rem; 
-  }
-}
-
-@media (max-width: 540px) {
-  .container {
-    margin-top: 250px;
-  }
-}
-
-@media (max-width: 480px) {
-  .container {
-    margin-top: 50px;
-  }
-
-  .cup-button {
-    font-size: 0.8rem; 
-    padding: 8px 12px; 
-  }
-}
-
-@media (max-width: 375px) {
-  .container {
-    margin-top: 180px;
-  }
-
-  .cup-button {
-    font-size: 0.7rem; 
-    padding: 6px 10px; 
+  ul {
+    max-height: 50vh;
   }
 }

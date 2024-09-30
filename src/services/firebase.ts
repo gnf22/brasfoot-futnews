@@ -12,7 +12,14 @@ const firebaseApp = initializeApp(firebaseConfig);
 const db = getFirestore(firebaseApp);
 const userCollectionRef = collection(db, "users");
 const teamCollectionRef = collection(db, "teams");
+const worldCupCollectionRef = collection(db, "world_cup");
 const settingsCollectionRef = collection(db, "settings");
+
+export const getIsClubEnabled = async () => {
+  const data = await getDocs(settingsCollectionRef);
+  const settings = data.docs.map((doc) => doc.data().isClubEnabled);
+  return settings;
+};
 
 export const getIsSelectionCupEnabled = async () => {
   const data = await getDocs(settingsCollectionRef);
@@ -49,8 +56,22 @@ export const getTeamsFromFirestore = async () => {
     }));
   };
 
+  export const getWorldCupSelectionsFromFireStore = async () => {
+    const data = await getDocs(worldCupCollectionRef);
+    return data.docs.map((doc) => ({
+      ...doc.data(), id: doc.id,
+    }));
+  };
+
   export const assignCoachToTeam = async (teamId: string, coachName: string) => {
     const teamDocRef = doc(db, "teams", teamId);
+    await updateDoc(teamDocRef, {
+      coach: coachName
+    });
+  };
+
+  export const assignCoachToWorldCupTeam = async (teamId: string, coachName: string) => {
+    const teamDocRef = doc(db, "world_cup", teamId);
     await updateDoc(teamDocRef, {
       coach: coachName
     });
@@ -60,4 +81,8 @@ export const getTeamsFromFirestore = async () => {
     const teamRef = doc(db, "teams", teamId);
     await updateDoc(teamRef, { coach: null });
   };
-      
+
+  export const removeCoachFromWorldCupTeam = async (teamId: string) => {
+    const teamRef = doc(db, "world_cup", teamId);
+    await updateDoc(teamRef, { coach: null });
+  };

@@ -146,8 +146,9 @@ img.team-logo {
   font-weight: bold;
   font-size: 1.2rem; /* Tamanho do nome do time */
   margin: 0.5rem 0; /* Margem em rem */
-  white-space: normal; /* Permite quebra de linha no nome do time */
-  word-wrap: break-word; /* Quebra palavras longas se necessário */
+  white-space: nowrap; /* Impede a quebra de linha */
+  overflow: hidden; /* Oculta o que não couber */
+  text-overflow: ellipsis; /* Adiciona reticências se o texto for muito longo */
 }
 
 
@@ -164,6 +165,12 @@ img.team-logo {
   margin-top: 5px; /* Espaço acima dos botões */
 }
 
+.choose:disabled {
+  background-color: #6c757d; /* Cor de fundo para botão desabilitado */
+  cursor: not-allowed; /* Cursor padrão para botão desabilitado */
+  opacity: 0.65; /* Reduz a opacidade do botão desabilitado */
+}
+
 button.choose {
   padding: 5px 20px;
   background-color: #28a745;
@@ -175,7 +182,7 @@ button.choose {
   transition: background-color 0.3s;
 }
 
-button.choose:hover {
+button.choose:hover:not(:disabled) {
   background-color: #218838;
 }
 
@@ -190,7 +197,13 @@ button.despair {
   transition: background-color 0.3s;
 }
 
-button.despair:hover {
+.despair:disabled {
+  background-color: #6c757d; /* Cor de fundo para botão desabilitado */
+  cursor: not-allowed; /* Cursor padrão para botão desabilitado */
+  opacity: 0.65; /* Reduz a opacidade do botão desabilitado */
+}
+
+button.despair:hover:not(:disabled) {
   background-color: #c82333;
 }
 
@@ -237,7 +250,7 @@ button.despair:hover {
   }
 
   .team-name {
-    font-size: 1.0rem;
+    font-size: 0.75rem;
   }
 
   ul {
